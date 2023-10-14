@@ -27,26 +27,8 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-//    @Override
-//    public void viewBalance(User user) throws SQLException {
-//        String userEmail = user.getEmail();
-//        String column = "balance";
-//        String sql = "select" + column + "from user where email = ?";
-//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//        ResultSet resultSet = preparedStatement.executeQuery();
-//        preparedStatement.setString(1,userEmail);
-//        resultSet.next();
-//        while(resultSet != null){
-////            int acc_no = resultSet.getInt(1);
-////            String name = resultSet.getString(2);
-////            String email = resultSet.getString(1);
-//            long presentBalance = resultSet.getLong(column);
-////            user = new User(email, balance);
-//            System.out.println("Your available balance is: " + user.getBalance());
-//        }
-//    }
-@Override
-public void viewBalance(String email, long pin) {
+    @Override
+    public void viewBalance(String email, long pin) {
         double balance = 0.0;
         String selectSQL = "SELECT balance FROM user WHERE email = ? and securitypin = ?";
 
