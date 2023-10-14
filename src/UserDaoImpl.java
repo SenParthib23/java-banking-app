@@ -46,26 +46,27 @@ public class UserDaoImpl implements UserDao {
 //        }
 //    }
 @Override
-public double viewBalance(String email) {
-    double balance = 0.0;
-    String selectSQL = "SELECT balance FROM user WHERE email = ?";
+public void viewBalance(String email, long pin) {
+        double balance = 0.0;
+        String selectSQL = "SELECT balance FROM user WHERE email = ? and securitypin = ?";
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-        preparedStatement.setString(1, email);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setLong(2, pin);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            balance = resultSet.getDouble("balance");
-            System.out.println("Balance for user with email " + email + " is: " + balance);
-        } else {
-            System.out.println("User with email " + email + " not found.");
+            if (resultSet.next()) {
+                balance = resultSet.getDouble("balance");
+                System.out.println("Balance for user with email " + email + " is: " + balance);
+            } else {
+                System.out.println("Please provide correct credentials !!!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
     }
 
-    return balance;
-}
 
     @Override
     public void makeDeposit(User user) throws SQLException {
@@ -84,7 +85,7 @@ public double viewBalance(String email) {
 
             if(count > 0){
                 System.out.println("Amount successfully deposited...");
-                System.out.println("New balance is: " + (user.getBalance() + deposit));
+                System.out.println("New balance is: " + ((user.getBalance()) + deposit));
             }else{
                 System.out.println("Opps!! Something went wrong...");
             }
@@ -109,7 +110,7 @@ public double viewBalance(String email) {
 
             if(count > 0){
                 System.out.println("Amount debited successfully!!");
-                System.out.println("Available balance: " + (user.getBalance() - withdraw));
+                System.out.println("Available balance: " + ((user.getBalance()) - withdraw));
             }else{
                 System.out.println("Opps!! Something went wrong...");
             }
@@ -127,7 +128,8 @@ public double viewBalance(String email) {
             String name = resultSet.getString(2);
             String email = resultSet.getString(3);
             long balance = resultSet.getLong(4);
-            User user = new User(acc_no, name, email, balance);
+            long securitypin = resultSet.getLong(5);
+            User user = new User(acc_no, name, email, balance, securitypin);
             users.add(user);
             System.out.println("Account No: " + user.getAcc_no() + ", Name: " + user.getName() + ", Email: " + user.getEmail() + ", Balance: " + user.getBalance());
         }

@@ -3,16 +3,18 @@ public class User {
         String name;
         String email;
         long balance;
+        long securitypin;
 
         public User(){
 
         }
 
-        public User(int acc_no, String name, String email, long balance){
+        public User(int acc_no, String name, String email, long balance, long securitypin){
             this.acc_no = acc_no;
             this.name = name;
             this.email = email;
             this.balance = balance;
+            this.securitypin = securitypin;
         }
 
     public int getAcc_no() {
@@ -47,6 +49,14 @@ public class User {
         this.balance = balance;
     }
 
+    public long getSecuritypin() {
+        return securitypin;
+    }
+
+    public void setSecuritypin(long securitypin) {
+        this.securitypin = securitypin;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -54,6 +64,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", balance=" + balance +
+                ", securitypin=" + securitypin +
                 '}';
     }
 }

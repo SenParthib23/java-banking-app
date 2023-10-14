@@ -64,8 +64,11 @@ public class Main {
                                 case 2:{
                                     System.out.println("Enter your email: ");
                                     String useremail = sc.next();
+                                    System.out.println("Enter your security pin: ");
+                                    long userpin = Long.parseLong(sc.next());
                                     user.setEmail(useremail);
-                                    userDao.viewBalance(useremail);
+                                    user.setSecuritypin(userpin);
+                                    userDao.viewBalance(useremail, userpin);
                                     break;
                                 }
                                 case 3:{
